@@ -103,15 +103,99 @@ void parser(ifstream &file){
 		}
 		expect("end");
 	
-		cout << "function Ident ( [ParamList] ): Type ; [DeclList] begin [StmtList] end " << endl;
+		cout << "Func => function Ident ( [ParamList] ): Type ; [DeclList] begin [StmtList] end " << endl;
 	}
 	void ParamList(){
 	
 	
+		cout << "ParamList => Param {, Param}" << endl;
+	}
+
+	void Param(){
+		
+		cout << "Type Ident" << endl;
+	}
+	void Type(){
+		
+		cout << "Type => int | real | string" << endl;
+	}
+
+	void VarList(){
+		
+		cout << "VarList => Ident {,Ident}" << endl;
+	}
+
+	void StmtList(){
+	
+		cout << "StmtList => Stmt{Stmt}" << endl;
+	}
+
+	void Stmt(){
+	
+		cout << "Assign | Read | Write | If | While | Do | Return" << endl;
+	}
+	void Assign(){
+	
+		cout << "Assign => Ident := Expr;"
+	}
+	void Read(){
+	
+		cout << "Read => read ( VarList ) ; " << endl;
+	}
+
+	void Write(){
+		
+
+		cout << "read ( VarList ) ;" << endl;
 	
 	}
 
-	void Ident(){}
+	void If(){
+		
+		cout << "if ( Cond ) begin StmtList end { elsif ( Cond ) begin StmtList end } [else begin StmtList end ]" << endl;
+	}
+	void While(){
+
+
+
+		cout << "while ( Cond ) begin [StmtList] end" << endl;
+	}
+
+	void Do(){
+		cout << "do [StmtList] until ( Cond ) ;" << endl;
+	}
+
+	void Return(){
+	
+		cout << "return Expr ;" << endl;
+	}
+
+	void Cond(){
+		cout << "Expr RelOp Expr" << endl;
+	}
+	void RelOp(){
+		cout << "> | < | >= | <= | = | <> " << endl;
+	}
+	void Expr(){
+		cout << "Term { (+|-) Term }" << endl;
+	}
+	void Term(){
+	
+		cout << "Factor { (*|/) Factor } " << endl;
+	}
+	void FuncCall(){
+		cout << "Ident ( [ArgList] ) " << endl;
+	}
+
+	void ArgList(){
+		
+		cout << "Expr { ,Expr} " << endl;
+	}
+
+
+
+
+	
 }
 
 #endif
