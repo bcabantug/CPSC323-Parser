@@ -1,27 +1,41 @@
 #include <iostream>
 #include <fstream>
+#include "parser.h"
 
 using namespace std;
 
-//main that takes in a file argument
-int main(int argc, char* argv []) {
-	
-	if (argc < 2) {
-		cout << "Missing file name...";
-		return 1;
-	}
+////main that takes in a file argument
+//int main(int argc, char* argv []) {
+//	
+//	if (argc < 2) {
+//		cout << "Missing file name...";
+//		return 1;
+//	}
+//
+//	ifstream fin(argv[1]);
+//
+//	if (!fin) {
+//		cout << "file not found...";
+//		return 1;
+//	}
+//	
+//	parser(fin); //parser function (INCOMPLETE)
+//	fin.close();
+//
+//
+//
+//
+//}
 
-	ifstream fin(argv[1]);
+int main() {
+	ifstream fin("one.txt");
 
 	if (!fin) {
 		cout << "file not found...";
 		return 1;
 	}
-	
-	//parser(fin); //parser function (INCOMPLETE)
+
+	parser(fin);
 	fin.close();
-
-
-
-
+	
 }
