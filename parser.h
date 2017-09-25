@@ -34,74 +34,74 @@ void ArgList(ifstream&, LexTok&);
 
 
 void parser(ifstream &file) {
-    LexTok curToken = lexer(file);
-    
-    
-    Program(file, curToken);
-    
+	LexTok curToken = lexer(file);
+
+
+	Program(file, curToken);
+
 }
 
 //lexeme check
 bool accept(string s, LexTok& check, ifstream &file) {
-    
-    //checks the string with the lexeme
-    if (s.compare(check.lexeme) == 0) {
-        check = lexer(file);
-        cout << "yay" << endl;
-        return true;
-    }
-    else {
-        return false;
-    }
+
+	//checks the string with the lexeme
+	if (s.compare(check.lexeme) == 0) {
+		check = lexer(file);
+		cout << "yay" << endl;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 void expect(string s, LexTok& check, ifstream &file) {
-    if (!accept(s, check, file)) {
-        //writeError()
-        cout << "ERROR" << endl;
-    }
-    
+	if (!accept(s, check, file)) {
+		//writeError()
+		cout << "ERROR" << endl;
+	}
+
 }
 
 
 void Program(ifstream& file, LexTok& token) {
-    expect("program", token, file);
-    
-    if (token.token.compare("Type") == 0) {
-        DeclList(file, token);
-    }
-    else if (token.lexeme.compare("function") == 0) {
-    	FuncList(file, token);
-    }
-    
-    expect("begin", token, file);
-    
-    if ((!(token.lexeme.compare("end"))) == 0) {
-    	StmtList(file, token);
-    }
-    
-    expect(".", token, file);
-    
-    cout << "Program => program [DeclList] [FuncList] begin [StmtList] end." << endl;
+	expect("program", token, file);
+
+	if (token.token.compare("Type") == 0) {
+		DeclList(file, token);
+	}
+	else if (token.lexeme.compare("function") == 0) {
+		FuncList(file, token);
+	}
+
+	expect("begin", token, file);
+
+	if ((!(token.lexeme.compare("end"))) == 0) {
+		StmtList(file, token);
+	}
+
+	expect(".", token, file);
+
+	cout << "Program => program [DeclList] [FuncList] begin [StmtList] end." << endl;
 }
 
 void DeclList(ifstream& file, LexTok& token) {
-    
-    do {
-        Decl(file, token);
-    } while (token.token.compare("Type") == 0);
-    
-    cout << "DeclList => Decl {Decl}" << endl;
+
+	do {
+		Decl(file, token);
+	} while (token.token.compare("Type") == 0);
+
+	cout << "DeclList => Decl {Decl}" << endl;
 }
 
 void Decl(ifstream& file, LexTok& token) {
 
 	Type(file, token);
-    
+
 	VarList(file, token);
 
 	expect(";", token, file);
-    
+
 	cout << "Decl => Type VarList ;" << endl;
 }
 
@@ -116,13 +116,13 @@ void FuncList(ifstream& file, LexTok& token) {
 }
 
 void Func(ifstream& file, LexTok& token) {
-	
-    expect("function", token, file);
-	
-    if(token.token.compare("Identifier") == 0)
-    {
-        token = lexer(file);
-    }
+
+	expect("function", token, file);
+
+	if (token.token.compare("Identifier") == 0)
+	{
+		token = lexer(file);
+	}
 
 	expect("(", token, file);
 
@@ -133,152 +133,250 @@ void Func(ifstream& file, LexTok& token) {
 	expect(")", token, file);
 
 	expect(":", token, file);
-	
-    Type(file, token);
-	
-    expect(";", token, file);
+
+	Type(file, token);
+
+	expect(";", token, file);
 
 	if ((!(token.lexeme.compare("begin"))) == 0) {
 		DeclList(file, token);
 	}
-	
-    expect("begin", token, file);
-	
-    if ((!(token.lexeme.compare("end"))) == 0) {
-        StmtList(file, token);
+
+	expect("begin", token, file);
+
+	if ((!(token.lexeme.compare("end"))) == 0) {
+		StmtList(file, token);
 	}
-	
-    expect("end", token, file);
+
+	expect("end", token, file);
 
 	cout << "Func => function Ident ( [ParamList] ): Type ; [DeclList] begin [StmtList] end " << endl;
 }
 
 void ParamList(ifstream& file, LexTok& token) {
 
-    Param(file, token);
-    
-    do {
-        Param(file, token);
-    } while (token.lexeme.compare(",") == 0);
-    
+	Param(file, token);
+
+	do {
+		Param(file, token);
+	} while (token.lexeme.compare(",") == 0);
+
 	cout << "ParamList => Param {, Param}" << endl;
 }
 
 void Param(ifstream& file, LexTok& token) {
 
-    Type(file, token);
-    
-    //Ident(file, token);
-    
+	Type(file, token);
+
+	//Ident(file, token);
+
 	cout << "Param => Type Ident" << endl;
 }
 
 void Type(ifstream& file, LexTok& token) {
 
-    if(token.lexeme.compare("int") == 0 || token.lexeme.compare("real") == 0 || token.lexeme.compare("string") == 0)
-    {
-        cout << "Type => int | real | string" << endl;
-    }
+	if (token.lexeme.compare("int") == 0 || token.lexeme.compare("real") == 0 || token.lexeme.compare("string") == 0)
+	{
+		cout << "Type => int | real | string" << endl;
+	}
 }
 
 void VarList(ifstream& file, LexTok& token) {
 
-    //Ident(file, token);
-    
-    do {
-        //Ident(file, token);
-    } while (token.lexeme.compare(","));
-    
+	//Ident(file, token);
+
+	do {
+		//Ident(file, token);
+	} while (token.lexeme.compare(","));
+
 	cout << "VarList => Ident {,Ident}" << endl;
 }
 
 void StmtList(ifstream& file, LexTok& token) {
 
-    Stmt(file, token);
-    
-    do {
-        Stmt(file, token);
-    } while (token.token.compare("Identifier") || token.lexeme.compare("read") || token.lexeme.compare("write") || token.lexeme.compare("if") || token.lexeme.compare("while") || token.lexeme.compare("do") || token.lexeme.compare("return"));
-    
+	Stmt(file, token);
+
+	do {
+		Stmt(file, token);
+	} while (token.token.compare("Identifier") == 0 || token.lexeme.compare("read") == 0 || token.lexeme.compare("write") == 0 || token.lexeme.compare("if") == 0 || token.lexeme.compare("while") == 0 || token.lexeme.compare("do") == 0 || token.lexeme.compare("return") == 0);
+
 	cout << "StmtList => Stmt{Stmt}" << endl;
 }
 
 void Stmt(ifstream& file, LexTok& token) {
 
-    if(token.token.compare("Identifier"))
-    {
-        //Assign(file, token);
-    }
-    else if(token.lexeme.compare("read"))
-    {
-        //Read(file, token);
-    }
-    else if(token.lexeme.compare("write"))
-    {
-        //Write(file, token);
-    }
-    else if(token.lexeme.compare("if"))
-    {
-        //If(file, token);
-    }
-    else if(token.lexeme.compare("while"))
-    {
-        //While(file, token);
-    }
-    else if(token.lexeme.compare("do"))
-    {
-        //Do(file, token);
-    }
-    else if(token.lexeme.compare("return"))
-    {
-        //Return(file, token);
-    }
-    
-    cout << "Stmt => Assign | Read | Write | If | While | Do | Return" << endl;
+	if (token.token.compare("Identifier"))
+	{
+		//Assign(file, token);
+	}
+	else if (token.lexeme.compare("read"))
+	{
+		//Read(file, token);
+	}
+	else if (token.lexeme.compare("write"))
+	{
+		//Write(file, token);
+	}
+	else if (token.lexeme.compare("if"))
+	{
+		//If(file, token);
+	}
+	else if (token.lexeme.compare("while"))
+	{
+		//While(file, token);
+	}
+	else if (token.lexeme.compare("do"))
+	{
+		//Do(file, token);
+	}
+	else if (token.lexeme.compare("return"))
+	{
+		//Return(file, token);
+	}
+
+	cout << "Stmt => Assign | Read | Write | If | While | Do | Return" << endl;
 }
 
 void Assign(ifstream& file, LexTok& token) {
-    
-    //Ident(file, token);
-    
-    expect(":=", token, file);
-    
-    //Expr(file, token);
+
+	//Ident(file, token);
+
+	expect(":=", token, file);
+
+	//Expr(file, token);
 
 	cout << "Assign => Ident := Expr;";
 }
 
-//void Read(ifstream& file, LexTok& token) {
-//
-//	cout << "Read => read ( VarList ) ; " << endl;
-//}
-//
-//void Write(ifstream& file, LexTok& token) {
-//
-//
-//	cout << "Write => write ( Expr {, Expr} ) ;" << endl;
-//
-//}
-//
-//void If(ifstream& file, LexTok& token) {
-//
-//	cout << "If => if ( Cond ) begin StmtList end { elsif ( Cond ) begin StmtList end } [else begin StmtList end ]" << endl;
-//}
-//void While(ifstream& file, LexTok& token) {
-//
-//
-//
-//	cout << "While => while ( Cond ) begin [StmtList] end" << endl;
-//}
-//
-//void Do(ifstream& file, LexTok& token) {
-//	cout << "do => do [StmtList] until ( Cond ) ;" << endl;
-//}
-//
-//void Return(ifstream& file, LexTok& token) {
-//
-//	cout << "Return => return Expr ;" << endl;
-//}
+//BRIAN 9/25 NOT TESTED
+void Read(ifstream& file, LexTok& token){
+
+	expect("(", token, file);
+
+	VarList(file, token);
+
+	expect(")", token, file);
+	
+	expect(";", token, file);
+
+	cout << "Read => read ( VarList ) ; " << endl;
+}
+//Brian 9/25 NOT TESTED
+void Write(ifstream& file, LexTok& token) {
+	//after consuming write lexeme
+	expect("(", token, file);
+
+	//keeps on finding an expression as long as the token matches with the comma
+	do{
+		Expr(file, token);
+	} while (token.lexeme.compare(",") == 0);
+
+	expect(")", token, file);
+
+	expect(";", token, file);
+	//output
+	cout << "Write => write ( Expr {, Expr} ) ;" << endl;
+}
+
+//BRIAN 9/25 
+void If(ifstream& file, LexTok& token) {
+	//assuming if has been consumed
+
+	expect("(", token, file);
+
+	//Cond(file, token); //not complete
+
+	expect(")", token, file);
+
+	expect("begin", token, file);
+
+	StmtList(file, token);
+
+	expect("end", token, file);
+
+	//elseif statements if there are any
+
+	do{
+		//consume initial elsif
+		expect("(", token, file);
+
+		//Cond(file, token); //not complete
+
+		expect(")", token, file);
+
+		expect("begin", token, file);
+
+		StmtList(file, token);
+
+		expect("end", token, file);
+	
+	} while (token.lexeme.compare("elsif") == 0);
+
+	//checking for else statement
+
+	if (token.lexeme.compare("else") == 0){
+		//consume else token
+		expect("begin", token, file);
+		StmtList(file, token);
+		expect("end", token, file);
+	}
+
+	cout << "If => if ( Cond ) begin StmtList end { elsif ( Cond ) begin StmtList end } [else begin StmtList end ]" << endl;
+}
+void While(ifstream& file, LexTok& token) {
+	//consume while token/keyword
+
+	expect("(", token, file);
+
+	//Cond(file, token);
+
+	expect(")", token, file);
+
+	expect("begin", token, file);
+	//checks for stmtList if there
+	
+	if (token.token.compare("Identifier") == 0 || token.lexeme.compare("read") == 0 || token.lexeme.compare("write") == 0 || token.lexeme.compare("if") == 0 || token.lexeme.compare("while") == 0 || token.lexeme.compare("do") == 0 || token.lexeme.compare("return") == 0){
+		StmtList(file, token);
+		
+	}
+
+	expect("end", token, file);
+
+
+	cout << "While => while ( Cond ) begin [StmtList] end" << endl;
+}
+//Brian 9/25
+void Do(ifstream& file, LexTok& token) {
+	
+	//consume do lexeme (will check if implemented)
+
+	if (token.token.compare("Identifier") == 0 || token.lexeme.compare("read") == 0 || token.lexeme.compare("write") == 0 || token.lexeme.compare("if") == 0 || token.lexeme.compare("while") == 0 || token.lexeme.compare("do") == 0 || token.lexeme.compare("return") == 0){
+		StmtList(file, token);
+	}
+
+	expect("until", token, file);
+
+	expect("(", token, file);
+	
+	//Cond(file, token);
+	
+	expect(")", token, file);
+
+	expect(";", token, file);
+	
+	cout << "do => do [StmtList] until ( Cond ) ;" << endl;
+}
+//Brian 
+void Return(ifstream& file, LexTok& token) {
+	
+	//expect return token to be consumed
+
+	Expr(file, token);
+
+	expect(";", token, file);
+
+	cout << "Return => return Expr ;" << endl;
+}
 //
 //void Cond(ifstream& file, LexTok& token) {
 //	cout << "Cond => Expr RelOp Expr" << endl;
