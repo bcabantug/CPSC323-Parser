@@ -4,8 +4,8 @@
 #include "lexer.h"
 
 //Function Prototypes
-bool accept(string, LexTok);
-void expect(string);
+bool accept(string, LexTok, ifstream);
+void expect(string, LexTok, ifstream);
 void program();
 void DeclList();
 void Decl();
@@ -35,7 +35,6 @@ void ArgList();
 
 
 void parser(ifstream &file) {
-	string getToken();
 	LexTok curToken = lexer(file);
 
 	
@@ -44,9 +43,11 @@ void parser(ifstream &file) {
 
 }
 
-bool accept(string s, ifstream &file) {
-	if (s == curToken) {
-		curToken = //lexer call getToken();
+bool accept(string s, LexTok check, ifstream &file) {
+
+	//checks thge 
+	if (s.compare(check.token) == 0) {
+		check = lexer(file);
 		return true;
 	}
 	else {
@@ -54,8 +55,8 @@ bool accept(string s, ifstream &file) {
 	}
 }
 
-void expect(string s) {
-	if (!accept(s)) {
+void expect(string s, LexTok check, ifstream &file) {
+	if (!accept(s, check, file)) {
 		//writeError()
 	}
 
