@@ -4,8 +4,8 @@
 #include "lexer.h"
 
 //Function Prototypes
-bool accept(string, LexTok, ifstream);
-void expect(string, LexTok, ifstream);
+bool accept(string, LexTok, ifstream&);
+void expect(string, LexTok, ifstream&);
 void program();
 void DeclList();
 void Decl();
