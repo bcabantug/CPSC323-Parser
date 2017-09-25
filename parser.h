@@ -4,10 +4,10 @@
 #include "lexer.h"
 
 //Function Prototypes
-bool accept(string, LexTok, ifstream&);
-void expect(string, LexTok, ifstream&);
-void Program(ifstream&, LexTok);
-void DeclList();
+bool accept(string, LexTok&, ifstream&);
+void expect(string, LexTok&, ifstream&);
+void Program(ifstream&, LexTok&);
+void DeclList(ifstream&, LexTok&);
 void Decl();
 void FuncList();
 void Func();
@@ -35,7 +35,7 @@ void ArgList();
 
 
 void parser(ifstream &file) {
-	LexTok curToken = lexer(file);
+	LexTok& curToken = lexer(file);
 
 	
 	Program(file, curToken);
@@ -44,7 +44,7 @@ void parser(ifstream &file) {
 }
 
 //lexeme check
-bool accept(string s, LexTok check, ifstream &file) {
+bool accept(string s, LexTok& check, ifstream &file) {
 
 	//checks the string with the lexeme
 	if (s.compare(check.lexeme) == 0) {
@@ -57,7 +57,7 @@ bool accept(string s, LexTok check, ifstream &file) {
 	}
 }
 
-void expect(string s, LexTok check, ifstream &file) {
+void expect(string s, LexTok& check, ifstream &file) {
 	if (!accept(s, check, file)) {
 		//writeError()
 		cout << "ERROR" << endl;
@@ -68,14 +68,14 @@ void expect(string s, LexTok check, ifstream &file) {
 
 
 
-void Program(ifstream& file, LexTok token) {
+void Program(ifstream& file, LexTok& token) {
 	expect("program", token, file);
 
-	//if (curToken.token == "Type") {
+	if (token.token.compare("Type") == 0) {
 
-	//	DeclList();
+		DeclList(file, token);
 
-	//}
+	}
 	//else if (curToken.lexeme == "function") {
 
 	//	FuncList();
@@ -91,21 +91,22 @@ void Program(ifstream& file, LexTok token) {
 	//}
 	//expect(".");
 
-	//cout << "Program => program [DeclList] [FuncList] begin [StmtList] end." << endl;
+	cout << "Program => program [DeclList] [FuncList] begin [StmtList] end." << endl;
 }
 
-//void DeclList() {
-//
-//
-//	do {
-//
-//		Decl();
-//	} while (curToken.token == "Type");
-//
-//
-//	cout << "DeclList => Decl {Decl}" << endl;
-//}
-//
+void DeclList(ifstream& file, LexTok& current) {
+
+
+	do {
+
+		//Decl();
+
+	} while (current.token == "Type");
+
+
+	cout << "DeclList => Decl {Decl}" << endl;
+}
+
 //void Decl() {
 //
 //	Type();
@@ -114,6 +115,7 @@ void Program(ifstream& file, LexTok token) {
 //	expect(";");
 //	cout << "Decl => Type VarList ;" << endl;
 //}
+
 //
 //void FuncList() {
 //
