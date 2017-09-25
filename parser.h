@@ -4,14 +4,12 @@
 #include "lexer.h"
 
 //Function Prototypes
-
 bool accept(string, LexTok&, ifstream&);
 void expect(string, LexTok&, ifstream&);
 void Program(ifstream&, LexTok&);
 void DeclList(ifstream&, LexTok&);
-
-void Decl();
-void FuncList();
+void Decl(ifstream&, LexTok&);
+void FuncList(ifstream&, LexTok&);
 void Func();
 void ParamList();
 void Param();
@@ -101,7 +99,7 @@ void DeclList(ifstream& file, LexTok& current) {
 
 	do {
 
-		//Decl();
+		Decl(file, current);
 
 	} while (current.token == "Type");
 
@@ -109,14 +107,14 @@ void DeclList(ifstream& file, LexTok& current) {
 	cout << "DeclList => Decl {Decl}" << endl;
 }
 
-//void Decl() {
-//
-//	Type();
-//	VarList();
-//
-//	expect(";");
-//	cout << "Decl => Type VarList ;" << endl;
-//}
+void Decl(ifstream& file, LexTok& current) {
+
+	//Type();
+	//VarList();
+
+	expect(";", current, file);
+	cout << "Decl => Type VarList ;" << endl;
+}
 
 //
 //void FuncList() {
