@@ -4,10 +4,12 @@
 #include "lexer.h"
 
 //Function Prototypes
+
 bool accept(string, LexTok&, ifstream&);
 void expect(string, LexTok&, ifstream&);
 void Program(ifstream&, LexTok&);
 void DeclList(ifstream&, LexTok&);
+
 void Decl();
 void FuncList();
 void Func();
