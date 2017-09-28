@@ -589,7 +589,7 @@ void FuncCall(ifstream& file, LexTok& token) {
 		expect(")", token, file);
 	}*/
 
-	cout << "Ident ( [ArgList] ) " << endl;
+	cout << "FuncCall => Ident ( [ArgList] ) " << endl;
 }
 
 //Grace
@@ -603,7 +603,7 @@ void ArgList(ifstream& file, LexTok& token) {
 		Expr(file, token);
 	}
 
-	cout << "Expr { ,Expr} " << endl;
+	cout << "ArgList => Expr { ,Expr} " << endl;
 }
 
 
