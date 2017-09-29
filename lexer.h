@@ -1,4 +1,20 @@
 /*
+REUSING FOR PROJECT 2
+
+Brian Cabantug
+Grace Derderian
+
+Program #2
+CPSC 323-85
+Sept 29 2017
+
+Compilers used: Visual Studio 2013 (Visual C++ 12.0)
+XCode (g++ Version something)
+
+Tested using both IDE and command line
+*/
+
+/*
 Brian Cabantug
 CPSC 323-85 - Fall 2017
 Program #1 - testing the lexer function
@@ -195,4 +211,3 @@ LexTok lexer(ifstream &file) {//takes file reference from function call
 	}
 }
 #endif
-
